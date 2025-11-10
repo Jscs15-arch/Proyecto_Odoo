@@ -177,43 +177,46 @@
  2. Añadir al fichero docker-compose.yml lo siguiente:
 
     ```yml
-    web:
-        #Indicamos que imagen de Docker Hub utilizaremos
-        image: odoo:18
-        container_name: odoo-web
-        #Indicamos que depende de "db", por lo cual debe ser procesada primero "db"
-        depends_on:
-            - db
-        # situado en el lugar donde ejecutemos "Docker compose"
-        volumes:
-        - ./volumesOdoo/addons:/mnt/extra-addons
-        - ./volumesOdoo/odoo-web-data:/var/lib/odoo
-        #Indicamos que el contenedor funcionara con usuario root y no con usuario odoo
-        user: root
-        # Definimos variables de entorno de Odoo
-        environment:
-        - HOST=db
-        - USER=odoo
-        - PASSWORD=odoo
-        - DB_HOST=db
-        - DB_PORT=5432
-        - DB_USER=odoo
-        - DB_PASSWORD=odoo
-        - DB_NAME=postgres
-    #Definimos el servicio de la base de datos
-    db:
-        image: postgres:15
+    version: '3.3'
 
-        container_name: odoo-db
-        # Definimos variables de entorno de PostgreSQL
-        environment:
-        - POSTGRES_PASSWORD=odoo
-        - POSTGRES_USER=odoo
-        - POSTGRES_DB=postgres
-        # Mapeamos el directorio del contenedor "var/lib/postgresql/data" en un directorio "./volumesOdoo/dataPostgreSQL"
-        # situado en el lugar donde ejecutemos "Docker compose"
-        volumes:
-        - ./volumesOdoo/dataPostgreSQL:/var/lib/postgresql/data
+    services:
+        web:
+            #Indicamos que imagen de Docker Hub utilizaremos
+            image: odoo:18
+            container_name: odoo-web
+            #Indicamos que depende de "db", por lo cual debe ser procesada primero "db"
+            depends_on:
+                - db
+            # situado en el lugar donde ejecutemos "Docker compose"
+            volumes:
+            - ./volumesOdoo/addons:/mnt/extra-addons
+            - ./volumesOdoo/odoo-web-data:/var/lib/odoo
+            #Indicamos que el contenedor funcionara con usuario root y no con usuario odoo
+            user: root
+            # Definimos variables de entorno de Odoo
+            environment:
+            - HOST=db
+            - USER=odoo
+            - PASSWORD=odoo
+            - DB_HOST=db
+            - DB_PORT=5432
+            - DB_USER=odoo
+            - DB_PASSWORD=odoo
+            - DB_NAME=postgres
+        #Definimos el servicio de la base de datos
+        db:
+            image: postgres:15
+    
+            container_name: odoo-db
+            # Definimos variables de entorno de PostgreSQL
+            environment:
+            - POSTGRES_PASSWORD=odoo
+            - POSTGRES_USER=odoo
+            - POSTGRES_DB=postgres
+            # Mapeamos el directorio del contenedor "var/lib/postgresql/data" en un directorio "./volumesOdoo/dataPostgreSQL"
+            # situado en el lugar donde ejecutemos "Docker compose"
+            volumes:
+            - ./volumesOdoo/dataPostgreSQL:/var/lib/postgresql/data
     ```
  3. Comandos de docker compose (se debe estar en el mismo directorio del archivo docker-compose.yml)
 
