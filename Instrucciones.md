@@ -552,8 +552,8 @@ docker compose up -d
 ```
 Y finalizamos abriendo Odoo por el navegar y utilizando las credenciales 
 
-*Database Name:* odoo_db
+    *Database Name:* odoo_db
 
-*email:* rubeninform123@gmail.com
+    *email:* rubeninform123@gmail.com
 
-*Password:* Hola123_
+    *Password:* Hola123_
