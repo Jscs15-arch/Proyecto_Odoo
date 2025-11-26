@@ -230,7 +230,7 @@
     ```
 ## 3. Configuración de Odoo
 
-### 1. Acceso al sistema
+### 3.1. Acceso al sistema
     
 Paso adicinal (en caso de reenvio de puertos `Configuración de red de Vbox`):
     
@@ -241,14 +241,14 @@ Paso adicinal (en caso de reenvio de puertos `Configuración de red de Vbox`):
 - Ingresa a tu instancia de Odoo `http://localhost:8069` o si estas con adaptador puenta `http://ipdelserver:8069`.  
 - Inicia sesión con un usuario con permisos de administrador o si es primera vez configurar la base de datos y credenciales.
 
-### 2. Instalación de módulos.
+### 3.2. Instalación de módulos.
     
 **Ruta:** `Aplicaciones`
 
 - Activar los modulos necesarios en este caso:
     `Ventas`, `Facturación`, `Inventario`, `Compra` y `Empleados`
 
-### 3. Crear y configurar
+### 3.3. Crear y configurar
 
 1. **Compañia**
 
@@ -557,3 +557,10 @@ Y finalizamos abriendo Odoo por el navegar y utilizando las credenciales
     email: rubeninform123@gmail.com
 
     Password: Hola123_
+
+## 5. Personalización de plantillas y automatización de Odoo
+
+### 5.1 Perzonalizar plantillas de correo
+Empezamos activando el modo desarrollador (mencionado en el apartado 2 del punto 3.3 )
+
+ahora creamos y configuramos la plantilla en `configuración→tecnico→platillas de correo`
