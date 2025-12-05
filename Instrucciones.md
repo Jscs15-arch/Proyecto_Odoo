@@ -4,15 +4,16 @@
 
 1. Descargar la imagen de Ubuntu Server 24.04.3.
 2. Crear y configurar la machina virtual  (herrramienta de virtualización utilizada **VirtualBox**).
-    #### Configuración:
-        Procesadores: 3
-        Ram: 4096 MB
-        Almacenamiento: 80 GB
-3. Seguir los pasos de instalación de Ubuntu server **(En mi caso instale ssh en el proceso para facilitarme el uso de comandos)**.
+| Configuración | Cantidad |
+|---------------|----------|
+|Procesadores | 3 |
+| Ram | 4096 MB |
+| Almacenamiento | 80 GB |
+4. Seguir los pasos de instalación de Ubuntu server **(En mi caso instale ssh en el proceso para facilitarme el uso de comandos)**.
 
-4. Una vez montado ubuntu server solo haria falta iniciar sesión con las credenciales creadas en la instalación.
+5. Una vez montado ubuntu server solo haria falta iniciar sesión con las credenciales creadas en la instalación.
 
-5. Con esto finalizamos la instalación de ubuntu server.
+6. Con esto finalizamos la instalación de ubuntu server.
 
 #### Adicional: **Instalación de ssh** para tener mejor accesibilidad a la linea de comandos.
 
@@ -633,7 +634,7 @@ Se ha detectado una oportunidad de venta mayor a 20.000€ en la empresa "`objec
 
 Nombre de la Oportunidad de venta: `object.name` (Oportunidad)
 
-Ingresos esperados: `object.expected_revenue`€ (Ingresoso esperados)
+Ingresos esperados: `object.expected_revenue`€ (Ingresos esperados)
 
 Enlace a oportunidades (/enlace → URL al modulo CRM)
 
