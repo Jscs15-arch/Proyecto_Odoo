@@ -5,11 +5,11 @@
 1. Descargar la imagen de Ubuntu Server 24.04.3.
 2. Crear y configurar la machina virtual  (herrramienta de virtualización utilizada **VirtualBox**).
 
-| Configuración | Cantidad |
-|---------------|----------|
-|Procesadores | 3 |
-| Ram | 4096 MB |
-| Almacenamiento | 80 GB |
+    | Configuración | Cantidad |
+    |---------------|----------|
+    |Procesadores | 3 |
+    | Ram | 4096 MB |
+    | Almacenamiento | 80 GB |
 4. Seguir los pasos de instalación de Ubuntu server **(En mi caso instale ssh en el proceso para facilitarme el uso de comandos)**.
 
 5. Una vez montado ubuntu server solo haria falta iniciar sesión con las credenciales creadas en la instalación.
