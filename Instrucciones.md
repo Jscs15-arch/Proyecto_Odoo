@@ -582,7 +582,7 @@ Ahora creamos y configuramos la plantilla en:
     
 **Asunto del correo:**
     
-`Gracias por tu compra {{object.name}}`
+Gracias por tu compra {{object.name}}
     
 > Para los marcadores en el asunto siempre se debe utilizar doble llave "{{}}"
 
