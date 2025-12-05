@@ -4,6 +4,7 @@
 
 1. Descargar la imagen de Ubuntu Server 24.04.3.
 2. Crear y configurar la machina virtual  (herrramienta de virtualización utilizada **VirtualBox**).
+
 | Configuración | Cantidad |
 |---------------|----------|
 |Procesadores | 3 |
