@@ -563,4 +563,89 @@ Y finalizamos abriendo Odoo por el navegar y utilizando las credenciales
 ### 5.1 Perzonalizar plantillas de correo
 Empezamos activando el modo desarrollador (mencionado en el apartado 2 del punto 3.3 )
 
-ahora creamos y configuramos la plantilla en `configuración→tecnico→platillas de correo`
+Ahora creamos y configuramos la plantilla en:
+    **RUTA:** `configuración → tecnico → Platillas de correo`
+
+ - Definimos  `Nombre, Modulo que usaremos como base de los datos para la plantilla`
+
+| Campo | Ejemplo |
+|--------|----------|
+| Nombre | [CUSTOM] Pedido de venta | 
+| Aplica a | Pedido de venta |
+
+- Definimos los campos de correo con Marcadores de posición dinámicos
+
+
+#### **Marcadores de posición dinámicos**
+    
+**Asunto del correo:**
+    
+`Gracias por tu compra {{object.name}}`
+    
+> Para los marcadores en el asunto siempre se debe utilizar doble llave "{{}}"
+
+**Cuerpo del correo:**
+
+Hola, `object.partner_id.name` (Cliente → Nombre)
+
+Gracias por la compra `object.name` (Referencia del pedido)
+
+Monto total: `object.amount_total` (Total)
+
+> Para los comandas en el cuerpo del correo debe utilizarce "/" en el cual se debe buscar la herramienta `Marcador de posición dinámico`
+y buscar los campos correspondientes a los comandos
+### 5.2 Crear la automatización
+**RUTA:** `configuración → tecnico → Reglas de automatización`
+
+Creamos una nueva regla y llenamos los campos `Nombre, Modelo, Activador y acción`
+
+| Campo | Ejemplo | Paso adicional |
+|--------|----------|-------|
+| Nombre | Aut. Venta | 
+| Modelo | Pedido de venta |
+| Activador | El estado está establecido como | Pedido de venta |
+| Acción | Enviar correo electrónico | [CUSTOM] Pedido de venta |
+### 5.3 Actividades de Automatización
+#### **Ejercicio 1. Mail automático**
+Automatización de notificaión por correo de Oportunidades de venta mayores a 20.000€
+
+**Intalar la aplicación CRM**
+
+**RUTA:** `Aplicaciones`
+
+Pulsar activar al ver el modulo CRM
+
+> Este es necesario ya que contiene `Oportunidades de venta`
+
+**Crear plantilla para la oportunidad**
+| Campo | Ejemplo |
+|--------|----------|
+| Nombre | [CUSTOM] Oportunidad de venta | 
+| Aplica a | Lead/Oportunidad |
+
+**Asunto del correo:**
+    
+`Oportunidad de venta mayor a 20.000€ en {{object.name}}`
+
+**Cuerpo del correo:**
+
+Se ha detectado una oportunidad de venta mayor a 20.000€ en la empresa "`object.partner_id.name` (Cliente → Nombre)":
+
+Nombre de la Oportunidad de venta: `object.name` (Oportunidad)
+
+Ingresos esperados: `object.expected_revenue`€ (Ingresoso esperados)
+
+Enlace a oportunidades (/enlace → URL al modulo CRM)
+
+**Automatizar**
+| Campo | Ejemplo | Paso adicional |
+|--------|----------|-------|
+| Nombre | Nueva oportunidad de venta > 20.000 | 
+| Modelo | Lead/Oportunidad |
+| Activador | Al guardar | Pedido de venta |
+|Coincidir todas de las siguientes reglas | Editar dominio | `Nueva regla` Ingresos esperados > 20000 |
+| Acción | Enviar correo electrónico | [CUSTOM] Oportunidad de venta |
+
+Creamos una nueva oportunidad en el modulo CRM que sea mayor a 20.000€ para comprobar
+
+#### **Ejercicio 2**
