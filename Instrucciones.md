@@ -252,67 +252,67 @@ Paso adicinal (en caso de reenvio de puertos `Configuración de red de Vbox`):
 
 ### 3.3. Crear y configurar
 
-1. **Compañia**
+#### 1. **Compañia**
 
-     **Ruta:** `Ajustes → Usuarios y Compañías → Compañías`
+ **Ruta:** `Ajustes → Usuarios y Compañías → Compañías`
 
-    - **Nombre de la empresa:** introduce el nombre comercial.  
-    - **Dirección fiscal:** completa los datos oficiales.  
-    - **Teléfono y correo electrónico:** datos de contacto corporativos.  
-    - **Moneda y zona horaria:** ajusta según el país donde opera la empresa.  
-    - **Logo:** sube el logotipo de la empresa para personalizar los reportes y el portal.  
-    - Guarda los cambios.
+- **Nombre de la empresa:** introduce el nombre comercial.  
+- **Dirección fiscal:** completa los datos oficiales.  
+- **Teléfono y correo electrónico:** datos de contacto corporativos.  
+- **Moneda y zona horaria:** ajusta según el país donde opera la empresa.  
+- **Logo:** sube el logotipo de la empresa para personalizar los reportes y el portal.  
+- Guarda los cambios.
 
-2. **Activar modo desarrollador (opcional)**
+#### 2. **Activar modo desarrollador (opcional)**
 
-    Para acceder a configuraciones avanzadas:
+Para acceder a configuraciones avanzadas:
 
-    - Ve a `Ajustes → Acerca de Odoo → Activar modo desarrollador`.
-    - Con esto podrás acceder a menús ocultos como:
-    - Parámetros del sistema
-    - Alias de correo
-    - Modelos de datos
-    - Secuencias de documentos
+ - Ve a `Ajustes → Acerca de Odoo → Activar modo desarrollador`.
+ - Con esto podrás acceder a menús ocultos como:
+ - Parámetros del sistema
+ - Alias de correo
+ - Modelos de datos
+ - Secuencias de documentos
 
-3. **Configuración de secuencias y sufijos de documentos**
+#### 3. **Configuración de secuencias y sufijos de documentos**
 
-    Odoo utiliza **secuencias automáticas** para generar numeraciones únicas en documentos como **facturas**, **pedidos de venta**, **albaranes** y más.
+Odoo utiliza **secuencias automáticas** para generar numeraciones únicas en documentos como **facturas**, **pedidos de venta**, **albaranes** y más.
 
-    **Ruta:** `Ajustes → Parámetros técnicos → Secuencias e identificadores → Secuencias`
+**Ruta:** `Ajustes → Parámetros técnicos → Secuencias e identificadores → Secuencias`
 
-    > Si no ves esta opción, activa el **Modo Desarrollador** .
+> Si no ves esta opción, activa el **Modo Desarrollador** .
 
-    #### Ejemplo de configuración:
-    - **Nombre:** Facturas de cliente  
-    - **Prefijo (Prefix):** `FAC/%(year)s/` → genera algo como `FAC/2025/0001`  
-    - **Sufijo (Suffix):** puedes añadir letras o códigos adicionales, por ejemplo `-A` → `FAC/2025/0001-A`  
-    - **Número siguiente:** 1  
-    - **Incremento:** 1  
-    - **Tamaño del número:** 4 (para mostrar 0001, 0002, etc.)
+#### Ejemplo de configuración:
+- **Nombre:** Facturas de cliente  
+- **Prefijo (Prefix):** `FAC/%(year)s/` → genera algo como `FAC/2025/0001`  
+- **Sufijo (Suffix):** puedes añadir letras o códigos adicionales, por ejemplo `-A` → `FAC/2025/0001-A`  
+- **Número siguiente:** 1  
+- **Incremento:** 1  
+- **Tamaño del número:** 4 (para mostrar 0001, 0002, etc.)
 
-    #### Ejemplo de prefijos/sufijos comunes:
-    | Documento | Prefijo sugerido |
-    |------------|------------------|
-    | Facturas de clientes | `FAC/%(y)s/` |
-    | Facturas de proveedores | `FAP/%(y)s/` |
-    | Pedidos de venta | `PED/%(y)s/` |
-    | Albaranes | `A/%(y)s/` |
-    | Compras | `COM/%(y)s/` |
+ **Ejemplo de prefijos/sufijos comunes:**
+| Documento | Prefijo sugerido |
+|------------|------------------|
+| Facturas de clientes | `FAC/%(y)s/` |
+| Facturas de proveedores | `FAP/%(y)s/` |
+| Pedidos de venta | `PED/%(y)s/` |
+| Albaranes | `A/%(y)s/` |
+| Compras | `COM/%(y)s/` |
 
 
-4. **Creación de usuarios y asignación de permisos**
+#### 4. **Creación de usuarios y asignación de permisos**
 
     **Ruta:** `Ajustes → Usuarios y Compañías → Usuarios`
 
-    - Pulsa **Crear** y completa los datos:
-    - **Nombre:** nombre completo del usuario.  
-    - **Correo electrónico:** será el login del usuario.  
-    - **Idioma y zona horaria:** define el idioma del sistema para él.  
-    - **Compañía principal:** asigna la empresa (si hay varias).  
-    - **Grupos de acceso:** define los permisos según el rol (por ejemplo: *Ventas / Usuario*, *Inventario / Administrador*, etc.)
+- Pulsa **Crear** y completa los datos:
+- **Nombre:** nombre completo del usuario.  
+- **Correo electrónico:** será el login del usuario.  
+- **Idioma y zona horaria:** define el idioma del sistema para él.  
+- **Compañía principal:** asigna la empresa (si hay varias).  
+- **Grupos de acceso:** define los permisos según el rol (por ejemplo: *Ventas / Usuario*, *Inventario / Administrador*, etc.)
 
 
-    #### Ejemplo de roles comunes:
+    **Ejemplo de roles comunes:**
     | Rol | Módulos principales | Grupos sugeridos |
     |------|---------------------|------------------|
     | Administrador | Todos | Acceso total |
@@ -323,37 +323,37 @@ Paso adicinal (en caso de reenvio de puertos `Configuración de red de Vbox`):
 
     Una vez guardado el usuario, Odoo enviará (si está configurado el correo saliente) un email de invitación con enlace para establecer su contraseña.
 
-5. **Configuración del correo electrónico (IMAP / SMTP)**
+#### 5. **Configuración del correo electrónico (IMAP / SMTP)**
 
-    Para habilitar el envío y recepción de correos desde Odoo:
+Para habilitar el envío y recepción de correos desde Odoo:
 
-    #### Servidor saliente (SMTP)
-    **Ruta:** `Ajustes → Parámetros técnicos → Servidores de correo saliente`
+#### Servidor saliente (SMTP)
+**Ruta:** `Ajustes → Parámetros técnicos → Servidores de correo saliente`
 
-    | Campo | Ejemplo | Descripción |
-    |--------|----------|-------------|
-    | Nombre del servidor | smtp.qbox | Dirección del servidor SMTP |
-    | Puerto | 465 | Usa 465 para SSL, 587 para STARTTLS |
-    | Usuario | usuario@empresa.com | Correo corporativo |
-    | Contraseña | ******** | Clave o contraseña de aplicación |
-    | SSL/TLS | ✅ | Conexión segura  |
+| Campo | Ejemplo | Descripción |
+|--------|----------|-------------|
+| Nombre del servidor | smtp.qbox | Dirección del servidor SMTP |
+| Puerto | 465 | Usa 465 para SSL, 587 para STARTTLS |
+| Usuario | usuario@empresa.com | Correo corporativo |
+| Contraseña | ******** | Clave o contraseña de aplicación |
+| SSL/TLS | ✅ | Conexión segura  |
 
-    > Pulsay **Probar conexión** para verificar la configuración.
+> Pulsar **Probar conexión** para verificar la configuración.
 
-    #### Servidor entrante (IMAP)
-    **Ruta:** `Ajustes → Parámetros técnicos → Servidores de correo entrante`
+#### Servidor entrante (IMAP)
+**Ruta:** `Ajustes → Parámetros técnicos → Servidores de correo entrante`
 
-    | Campo | Ejemplo | Descripción |
-    |--------|----------|-------------|
-    | Nombre | imap_qbox | 
-    | Tipo | IMAP |
-    | Servidor | imap.qboxmail.com |
-    | Puerto | 993 | IMAP SSL |
-    | Usuario | usuario@empresa.com |
-    | Contraseña | ******** |
-    | SSL/TLS | ✅ | Conexión segura |
+| Campo | Ejemplo | Descripción |
+|--------|----------|-------------|
+| Nombre | imap_qbox | 
+| Tipo | IMAP |
+| Servidor | imap.qboxmail.com |
+| Puerto | 993 | IMAP SSL |
+| Usuario | usuario@empresa.com |
+| Contraseña | ******** |
+| SSL/TLS | ✅ | Conexión segura |
 
-    >  Pulsar **Probar y confirmar** para verificar la conexión.
+>  Pulsar **Probar y confirmar** para verificar la conexión.
 
 ## 4. Exportación e Importación de Odoo con GitHub
 
@@ -563,7 +563,7 @@ Y finalizamos abriendo Odoo por el navegar y utilizando las credenciales
 ## 5. Personalización de plantillas y automatización de Odoo
 
 ### 5.1 Perzonalizar plantillas de correo
-Empezamos activando el [modo desarrollador](#2-Activar-modo-desarrollador-opcional)
+Empezamos activando el [modo desarrollador](#2-activar-modo-desarrollador-opcional)
 
 Ahora creamos y configuramos la plantilla en:
 
@@ -665,7 +665,7 @@ Cuando se confirma un Pedido de Venta que incluye un producto el cual puede adju
 | Modelo | Pedido de venta |
 | Activador | El estado está establecido como | Pedido de venta |
 |Aplicar a | Editar dominio | **1º regla(establecida por el activador):** `Estado` ` = ` `Pedido de venta` |
-|||**Nueva regla:** `Líneas del pedido` `contiene` `Servidor HP Enterprise 2000`|
+||| **Nueva regla:** `Líneas del pedido` `contiene` `Servidor HP Enterprise 2000`|
 |||**Nueva regla:** `Líneas del pedido` `no contiene` `Servicio de Instalación y Configuración de Servidores`|
 | Acción | Ejecutar código | [Codigo adjuntado](#codigo) |
 
