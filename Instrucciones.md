@@ -563,10 +563,11 @@ Y finalizamos abriendo Odoo por el navegar y utilizando las credenciales
 ## 5. Personalización de plantillas y automatización de Odoo
 
 ### 5.1 Perzonalizar plantillas de correo
-Empezamos activando el modo desarrollador (mencionado en el apartado 2 del punto 3.3 )
+Empezamos activando el [modo desarrollador](#2-Activar-modo-desarrollador-opcional)
 
 Ahora creamos y configuramos la plantilla en:
-    **RUTA:** `configuración → tecnico → Platillas de correo`
+
+**RUTA:** `configuración → tecnico → Platillas de correo`
 
  - Definimos  `Nombre, Modulo que usaremos como base de los datos para la plantilla`
 
@@ -582,7 +583,7 @@ Ahora creamos y configuramos la plantilla en:
     
 **Asunto del correo:**
     
-Gracias por tu compra {{object.name}}
+`Gracias por tu compra {{object.name}}`
     
 > Para los marcadores en el asunto siempre se debe utilizar doble llave "{{}}"
 
@@ -627,7 +628,7 @@ Pulsar activar al ver el modulo CRM
 
 **Asunto del correo:**
     
-`Oportunidad de venta mayor a 20.000€ en {{object.name}}`
+Oportunidad de venta mayor a 20.000€ en {{object.name}}
 
 **Cuerpo del correo:**
 
@@ -635,7 +636,7 @@ Se ha detectado una oportunidad de venta mayor a 20.000€ en la empresa "`objec
 
 Nombre de la Oportunidad de venta: `object.name` (Oportunidad)
 
-Ingresos esperados: `object.expected_revenue`€ (Ingresos esperados)
+Ingresos esperados: `object.expected_revenue`€ (Ingresoso esperados)
 
 Enlace a oportunidades (/enlace → URL al modulo CRM)
 
@@ -644,10 +645,48 @@ Enlace a oportunidades (/enlace → URL al modulo CRM)
 |--------|----------|-------|
 | Nombre | Nueva oportunidad de venta > 20.000 | 
 | Modelo | Lead/Oportunidad |
-| Activador | Al guardar | Pedido de venta |
-|Coincidir todas de las siguientes reglas | Editar dominio | `Nueva regla` Ingresos esperados > 20000 |
+| Activador | Al guardar |
+|Aplicar a | Editar dominio | **Nueva regla:** `Ingresos esperados` `>` `20000` |
 | Acción | Enviar correo electrónico | [CUSTOM] Oportunidad de venta |
 
 Creamos una nueva oportunidad en el modulo CRM que sea mayor a 20.000€ para comprobar
 
 #### **Ejercicio 2**
+
+>Para este ejercicio es necesario solo automatización
+
+Cuando se confirma un Pedido de Venta que incluye un 
+
+**Automatizar**
+| Campo | Ejemplo | Paso adicional |
+|--------|----------|-------|
+| Nombre | Borrador de servicio para Pedido | 
+| Modelo | Pedido de venta |
+| Activador | El estado está establecido como | Pedido de venta |
+|Aplicar a | Editar dominio | **1º regla(establecida por el activador):** `Estado` ` = ` `Pedido de venta` |
+|||**Nueva regla:** `Líneas del pedido` `no contiene` `Servicio de Instalación y Configuración de Servidores`|
+| Acción | Ejecutar código | [Codigo adjuntado](#codigo) |
+
+##### **Codigo**
+```py
+# 1. Obtener el producto de servicio (Producto B)
+# Se recomienda usar el ID, pero buscaremos por nombre para simplificar
+product_service = env['product.product'].search([('name', '=', 'Servicio de Instalación y Configuración de Servidores')], limit=1)
+
+if product_service:
+    # 2. Crear el nuevo Pedido de Venta (Borrador)
+    # 'record' es la variable que representa el Pedido de Venta (sale.order) actual confirmado.
+    new_so = env['sale.order'].create({
+        'partner_id': record.partner_id.id,
+        'state': 'draft', # Lo creamos como borrador
+    })
+
+    # 3. Crear la línea de pedido de servicio en el nuevo PV
+    env['sale.order.line'].create({
+        'order_id': new_so.id,
+        'product_id': product_service.id,
+        'name': product_service.display_name,
+        'product_uom_qty': 1.0,
+        'price_unit': product_service.list_price,
+    })
+```
