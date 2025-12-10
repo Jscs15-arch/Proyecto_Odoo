@@ -655,7 +655,8 @@ Creamos una nueva oportunidad en el modulo CRM que sea mayor a 20.000€ para co
 
 >Para este ejercicio es necesario solo automatización
 
-Cuando se confirma un Pedido de Venta que incluye un 
+Cuando se confirma un Pedido de Venta que incluye un producto el cual puede adjuntarse un servicio 
+>(Ejemplo: `PC sin Sistema operativo` pasar borrardor con el producto `Windows 11` al cliente)
 
 **Automatizar**
 | Campo | Ejemplo | Paso adicional |
