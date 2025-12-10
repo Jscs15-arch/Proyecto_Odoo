@@ -665,6 +665,7 @@ Cuando se confirma un Pedido de Venta que incluye un producto el cual puede adju
 | Modelo | Pedido de venta |
 | Activador | El estado está establecido como | Pedido de venta |
 |Aplicar a | Editar dominio | **1º regla(establecida por el activador):** `Estado` ` = ` `Pedido de venta` |
+|||**Nueva regla:** `Líneas del pedido` `contiene` `Servidor HP Enterprise 2000`|
 |||**Nueva regla:** `Líneas del pedido` `no contiene` `Servicio de Instalación y Configuración de Servidores`|
 | Acción | Ejecutar código | [Codigo adjuntado](#codigo) |
 
