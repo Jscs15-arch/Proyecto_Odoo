@@ -692,3 +692,7 @@ if product_service:
         'price_unit': product_service.list_price,
     })
 ```
+
+## 6 Modulo de tienda de Odoo
+
+## 7 Modulos personalizados en Odoo
