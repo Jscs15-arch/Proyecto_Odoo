@@ -33,6 +33,7 @@ services:
   db:
     image: postgres:15
     container_name: odoo-db
+    restart: unless-stopped
     # Definimos variables de entorno de PostgreSQL
     environment:
       - POSTGRES_PASSWORD=odoo
