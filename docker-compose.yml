@@ -1,11 +1,10 @@
-version: '3.3'
-
 services:
 #Definimos el servicio Web, en este caso Odoo
   web:
     #Indicamos que imagen de Docker Hub utilizaremos
     image: odoo:18
     container_name: odoo-web
+    restart: unless-stopped
     #Indicamos que depende de "db", por lo cual debe ser procesada primero "db"
     depends_on:
         - db
