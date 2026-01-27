@@ -314,10 +314,10 @@ Odoo utiliza **secuencias automáticas** para generar numeraciones únicas en do
 
     **Ejemplo de roles comunes:**
     | Rol | Módulos principales | Grupos sugeridos |
-    |------|---------------------|------------------|
+    |------|---------------------|-----------------|
     | Administrador | Todos | Acceso total |
     | Vendedor | Ventas | Usuario de ventas |
-     | Contable | Facturación | Usuario de contabilidad |
+    | Contable | Facturación | Usuario de contabilidad |
     | Almacén | Inventario | Usuario de inventario |
     | RRHH | Empleados | Gerente de RRHH |
 
@@ -653,10 +653,10 @@ Creamos una nueva oportunidad en el modulo CRM que sea mayor a 20.000€ para co
 
 #### **Ejercicio 2**
 
->Para este ejercicio es necesario solo automatización
+> Para este ejercicio es necesario solo automatización
 
 Cuando se confirma un Pedido de Venta que incluye un producto el cual puede adjuntarse un servicio 
->(Ejemplo: `PC sin Sistema operativo` pasar borrardor con el producto `Windows 11` al cliente)
+> (Ejemplo: `PC sin Sistema operativo` pasar borrardor con el producto `Windows 11` al cliente)
 
 **Automatizar**
 | Campo | Ejemplo | Paso adicional |
@@ -693,6 +693,29 @@ if product_service:
     })
 ```
 
-## 6 Modulo de tienda de Odoo
+## 6 Modulo de sitio web de Odoo
+
+### 6.1 Instalación del modulo `Sitio Web`
+**RUTA:** `Aplicaciones`
+
+Al instalarlo, Odoo nos enviará a crear la página web esta nos solicitara datos basicos para la creación de la pagina como para que es, logo y colores corporativos
+
+Luego de lo anterior nos enviara a la página para acceder a Odoo y sus herramientas deberemos iniciar sesión en la página y en la izquierda superior nos aparecera un cuadro para acceder a las herramientas de Odoo o editar las páginas.
+
+> Una vez creada la página, podemos crear otras páginas desde `Ajustes → Sitio Web`
+
+### 6.2 Personalizaciones realizadas 
+
+En caso de crear nuevas páginas podemos establecer la principal 
 
 ## 7 Modulos personalizados en Odoo
+
+Para la realización de esto podemos usar un editor de codigo como VScode o usar directamente el editor de texto o en CLI con comando "nano"
+
+### 7.1 Instalación de VScode
+
+Debemos ir al sitio web oficial de [VScode](https://code.visualstudio.com/Download) descargar para ubuntu el **`.deb`**, una vez descargado solo debemos ejecutar el archivo de la siguiente manera:
+
+```bash
+    sudo apt install /home/user/Download/*.deb
+```
