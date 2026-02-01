@@ -719,3 +719,151 @@ Debemos ir al sitio web oficial de [VScode](https://code.visualstudio.com/Downlo
 ```bash
     sudo apt install /home/user/Download/*.deb
 ```
+
+Y ya podremos acceder a la aplicación VScode desde GUI por el menu de aplicaciones o desde CLI escribiendo `code`
+
+Ya en VScode debes elegir como espacio de trabajo el destino que encontramos en el compose (volumesOdoo): 
+
+```yml
+    Volumes: 
+    - ./volumesOdoo/addons:/mnt/extra-addons
+    - ./volumesOdoo/odoo-web-data:/var/lib/odoo)
+```
+
+#### Permisos de ficheros y directorios
+
+Ahora deberiamos agregar los permisos a los ficheros y directorios:
+
+```bash
+chomod 777 /home/user/docker/Odoo/volumesOdoo #No es seguro pero funciona
+
+#Otra opción es ACL's
+setfacl -R -m  u:user:wrx /home/user/docker/Odoo/volumesOdoo #Este afecta a los archivos actualmente existentes de forma recursiva
+setfacl -R -d -m  u:user:wrx /home/user/docker/Odoo/volumesOdoo #Este afecta a futuros archivos de forma recursiva
+```
+Con esto pasamos a crear los directorios y archivos para los modulos, esto lo podemos hacer desde VScode o desde CLI
+
+#### Directorios y archivos para Modulos personalizados
+Para empezar todos los modulos se hacen en `/home/user/docker/Odoo/volumesOdoo/addons`
+
+Ahora crearemos el directorio del Modelo "prueba"
+```bash
+mkdir /home/user/docker/Odoo/volumesOdoo/addons/prueba
+```
+
+Luego creamos los ficheros `__init__.py` y `__manifest__.py` de los cuales agregaresmos lo siguiente a `__manifest__.py`
+```
+{
+    'name': "Prueba",
+    'author':"TecnoFix"
+}
+```
+
+#### Acceso al contenedor y creación de la plantilla del modulo
+
+Accedemos al contenedor con lo siguiente:
+```bash
+docker exec -it odoo-web bash
+```
+Generamos la plantilla del modulo personalizado
+```bash
+odoo scaffold prueba /mnt/extra-addons
+```
+
+#### Configuración y personalización del modulo
+
+Primero descomentamos la linea `security/ir.model.access.csv` del fichero `__manifest__.py` quedaria de la siguiente manera:
+```py
+    'data': [
+        'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/templates.xml',
+    ],
+```
+Modificar el csv de seguridad
+
+**RUTA:** /addons/prueba/security/ir.model.access.csv
+```csv
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+prueba_fruta_acl,prueba_fruta,model_prueba_fruta,base.group_user,1,1,1,1
+```
+
+Personalizar el python de models
+
+**Ruta:** volumesOdoo/addons/prueba/models/models.py
+```py
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+
+class prueba(models.Model):
+    _name = 'prueba.fruta'
+    _description = 'Modelo para la fruta'
+    _rec_name = 'nombre'            #Para que busque la nueva variable que sustituirá name
+
+    nombre = fields.Char()          #sera caractares
+    tipo = fields.Selection([
+    ('tipo_hueso','Hueso'),
+    ('tipo_citrico','Citrico')
+    ], string = 'Tipo de fruta')    #Campo de selecciones con sus campos
+    peso = fields.Integer(string='Peso')    #Peso como numero entero
+    peso_total = fields.Integer(string='Peso Total',compute='_compute_peso_total') #Peso_total como un decimal ademas del uso de 'compute' para definir que sera modificada por una api
+
+    @api.depends('peso')
+    def _compute_peso_total(self):
+        for registro in self:
+            registro.peso_total = registro.peso * 10
+```
+
+Personalizar el xml de vistas
+**RUTA:** volumesOdoo/addons/prueba/views/views.xml
+```xml
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="fruta_list">
+      <field name="name">Lista de frutas</field>
+      <field name="model">prueba.fruta</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="nombre"/>
+          <field name="tipo"/>
+          <field name="peso"/>
+          <field name="peso_total"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="fruta_action_window">
+      <field name="name">Lista de frutas</field>
+      <field name="res_model">prueba.fruta</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Top menu item -->
+
+    <menuitem name="prueba" id="prueba_menu"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Frutas" id="prueba_fruta" parent="prueba_menu"/>
+
+
+    <!-- actions -->
+
+    <menuitem name="Ver Frutas" id="prueba_menu_ver_fruta" parent="prueba_fruta"
+              action="fruta_action_window"/>
+
+  </data>
+</odoo>
+```
+
+#### Instalación del modulo personalizado en Odoo
+Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página 
+1. ir a aplicaciones 
+2. pulsar `Actualizar lista de aplicaciones` 
+3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Prueba) 
+4. activamos y listo ya podriamos ver Pruebas en la lista de modulos de odoo que esta a la izquierda
