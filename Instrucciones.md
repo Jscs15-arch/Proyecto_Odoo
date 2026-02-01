@@ -706,7 +706,17 @@ Luego de lo anterior nos enviara a la página para acceder a Odoo y sus herramie
 
 ### 6.2 Personalizaciones realizadas 
 
-En caso de crear nuevas páginas podemos establecer la principal 
+En caso de crear nuevas páginas podemos establecer la principal en `Sitio Web → Configuración → Sitios web`
+
+Solo debemos arrastrar la que queremos como principal
+
+### 6.3 Agregar productos y sus categorías
+Para esto solo debemos ir al modulo Ventas y hacer lo siguiente
+**RUTA:** Ventas → Productos
+1. Ingresamos el nuevo producto con sus datos o modificamos si ya existe 
+2. Nos dirigimos al campo `Ventas` donde veremos el grupo de opciones `Tienda de comercio electrónico`
+3. Activamos el checkbox `Está publicado` para que se muestre en la página web
+4. Y por ultimo agregamos una categoría nueva o existente
 
 ## 7 Modulos personalizados en Odoo
 
@@ -730,7 +740,7 @@ Ya en VScode debes elegir como espacio de trabajo el destino que encontramos en 
     - ./volumesOdoo/odoo-web-data:/var/lib/odoo)
 ```
 
-#### Permisos de ficheros y directorios
+### 7.2 Permisos de ficheros y directorios
 
 Ahora deberiamos agregar los permisos a los ficheros y directorios:
 
@@ -743,7 +753,7 @@ setfacl -R -d -m  u:user:wrx /home/user/docker/Odoo/volumesOdoo #Este afecta a f
 ```
 Con esto pasamos a crear los directorios y archivos para los modulos, esto lo podemos hacer desde VScode o desde CLI
 
-#### Directorios y archivos para Modulos personalizados
+### 7.3 Directorios y archivos para Modulos personalizados
 Para empezar todos los modulos se hacen en `/home/user/docker/Odoo/volumesOdoo/addons`
 
 Ahora crearemos el directorio del Modelo "prueba"
@@ -759,7 +769,7 @@ Luego creamos los ficheros `__init__.py` y `__manifest__.py` de los cuales agreg
 }
 ```
 
-#### Acceso al contenedor y creación de la plantilla del modulo
+### 7.4 Acceso al contenedor y creación de la plantilla del modulo
 
 Accedemos al contenedor con lo siguiente:
 ```bash
@@ -770,7 +780,7 @@ Generamos la plantilla del modulo personalizado
 odoo scaffold prueba /mnt/extra-addons
 ```
 
-#### Configuración y personalización del modulo
+### 7.5 Configuración y personalización del modulo
 
 Primero descomentamos la linea `security/ir.model.access.csv` del fichero `__manifest__.py` quedaria de la siguiente manera:
 ```py
@@ -861,7 +871,169 @@ Personalizar el xml de vistas
 </odoo>
 ```
 
-#### Instalación del modulo personalizado en Odoo
+### 7.6 Instalación del modulo personalizado en Odoo
+Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página 
+1. ir a aplicaciones 
+2. pulsar `Actualizar lista de aplicaciones` 
+3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Prueba) 
+4. activamos y listo ya podriamos ver Pruebas en la lista de modulos de odoo que esta a la izquierda
+
+### Práctica
+**MÓDULO PARA TIENDA DE VIDEOJUEGOS**
+
+**Requisitos**
+1. Modelo
+    - Nombre (Char): Título del juego.
+    - Consola (Selection): Opciones entre 'PS5', 'Xbox', 'Switch', 'PC'.
+    - Precio Base (Float): El precio sin impuestos (ej. 50.0).
+    - Unidades (Integer): Cuántos juegos hay en stock.
+    - Estado (Selection): 'Nuevo' o 'Segunda Mano'.
+    - Descuento (Boolean): Un check para decidir si se aplica rebaja.
+2. Campos Calculados
+    - Campo 1:
+        - Campo: valor_stock (Float).
+        - Lógica: Multiplicar precio_base * unidades.
+    - Campo 2:
+        - Campo: precio_final (Float).
+        - Lógica:
+            - Si el check de descuento está marcado, el precio final es el
+            precio_base menos 10 euros.
+            - Si no está marcado, el precio final es igual al precio_base.
+            - Ademas he agregado un 21% al precio final
+
+#### Realización
+
+##### ACL en caso de necesitarlo
+```bash
+setfacl -R -m  u:user:wrx /home/user/docker/Odoo/volumesOdoo #Este afecta a los archivos actualmente existentes de forma recursiva
+setfacl -R -d -m  u:user:wrx /home/user/docker/Odoo/volumesOdoo #Este afecta a futuros archivos de forma recursiva
+```
+
+
+##### Directorios y archivos para Modulos personalizados
+Para empezar todos los modulos se hacen en `/home/user/docker/Odoo/volumesOdoo/addons`
+
+Ahora crearemos el directorio del Modelo "tienda_videojuegos"
+```bash
+mkdir /home/user/docker/Odoo/volumesOdoo/addons/tienda_videojuegos
+```
+
+Luego creamos los ficheros `__init__.py` y `__manifest__.py` de los cuales agregaresmos lo siguiente a `__manifest__.py`
+```
+{
+    'name': "Tienda videojuegos",
+    'author':"TecnoFix"
+}
+```
+
+##### Acceso al contenedor y creación de la plantilla del modulo
+
+Accedemos al contenedor con lo siguiente:
+```bash
+docker exec -it odoo-web bash
+```
+Generamos la plantilla del modulo personalizado
+```bash
+odoo scaffold tienda_videojuegos /mnt/extra-addons
+```
+
+##### Configuración y personalización del modulo
+
+Primero descomentamos la linea `security/ir.model.access.csv` del fichero `__manifest__.py` quedaria de la siguiente manera:
+```py
+    'data': [
+        'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/templates.xml',
+    ],
+```
+Modificar el csv de seguridad
+
+**RUTA:** /addons/prueba/security/ir.model.access.csv
+```csv
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+tienda_videojuegos_acl,tienda_videojuegos,model_tienda_videojuegos_tienda_videojuegos,base.group_user,1,1,1,1
+```
+
+Personalizar el python de models
+
+**Ruta:** volumesOdoo/addons/prueba/models/models.py
+```py
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+
+
+class tienda_videojuegos(models.Model):
+    _name = 'tienda_videojuegos.tienda_videojuegos'
+    _description = 'tienda_videojuegos.tienda_videojuegos'
+    _rec_name = 'nombre'
+
+    nombre = fields.Char(string="Nombre del Juego", required=True)
+    consola = fields.Selection([('ps5','PS5'),('xbox','XBOX'),('switch','SWITCH'),('pc','PC')])
+    precio_base = fields.Float()
+    unidades = fields.Integer()
+    estado = fields.Selection([('nuevo','Nuevo'),('usado','Segunda Mano')])
+    descuento = fields.Boolean ()
+    valor_stock = fields.Float(compute="_stock_total", store=True)
+    precio_final = fields.Float(compute="_precio_total", store=True)
+
+    @api.depends('precio_base','unidades')
+    def _stock_total(self):
+        for record in self:
+            record.valor_stock = float(record.precio_base) * int(record.unidades)
+
+    @api.depends('precio_base','descuento')
+    def _precio_total(self):
+        for record in self:
+            if record.descuento:
+                record.precio_final = float(record.precio_base) * 1.21 - 10
+            else:
+                record.precio_final = float(record.precio_base) * 1.21
+```
+
+Personalizar el xml de vistas
+**RUTA:** volumesOdoo/addons/prueba/views/views.xml
+```xml
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="tienda_videojuegos_list">
+      <field name="name">Tienda_videojuegos list</field>
+      <field name="model">tienda_videojuegos.tienda_videojuegos</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name = "nombre"/>
+          <field name = "consola"/>
+          <field name = "precio_base"/>
+          <field name = "unidades"/>
+          <field name = "estado"/>
+          <field name = "descuento"/>
+          <field name = "valor_stock"/>
+          <field name = "precio_final"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tienda_videojuegos_action_window">
+      <field name="name">Tienda de videojuegos</field>
+      <field name="res_model">tienda_videojuegos.tienda_videojuegos</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+        <!-- Top menu item -->
+    <menuitem name="Gestión de videojuegos" id="tienda_videojuegos_menu"/>
+
+    <!-- menu categories -->
+    <menuitem name="Ver juegos" id="tienda_videojuegos_tienda_videojuegos" parent="tienda_videojuegos_menu"/>
+
+    <!-- actions -->
+    <menuitem name="Listar juegos" id="tienda_videojuegos_listar_videojuegos" parent="tienda_videojuegos_tienda_videojuegos"
+              action="tienda_videojuegos_action_window"/>
+```
+
+##### Instalación del modulo personalizado en Odoo
 Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página 
 1. ir a aplicaciones 
 2. pulsar `Actualizar lista de aplicaciones` 
