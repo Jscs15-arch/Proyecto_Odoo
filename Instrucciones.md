@@ -949,7 +949,7 @@ Primero descomentamos la linea `security/ir.model.access.csv` del fichero `__man
 ```
 Modificar el csv de seguridad
 
-**RUTA:** /addons/prueba/security/ir.model.access.csv
+**RUTA:** /addons/tienda_videojuegos/security/ir.model.access.csv
 ```csv
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 tienda_videojuegos_acl,tienda_videojuegos,model_tienda_videojuegos_tienda_videojuegos,base.group_user,1,1,1,1
@@ -957,7 +957,7 @@ tienda_videojuegos_acl,tienda_videojuegos,model_tienda_videojuegos_tienda_videoj
 
 Personalizar el python de models
 
-**Ruta:** volumesOdoo/addons/prueba/models/models.py
+**Ruta:** volumesOdoo/addons/tienda_videojuegos/models/models.py
 ```py
 # -*- coding: utf-8 -*-
 
@@ -993,7 +993,7 @@ class tienda_videojuegos(models.Model):
 ```
 
 Personalizar el xml de vistas
-**RUTA:** volumesOdoo/addons/prueba/views/views.xml
+**RUTA:** volumesOdoo/addons/tienda_videojuegos/views/views.xml
 ```xml
 <odoo>
   <data>
@@ -1037,5 +1037,5 @@ Personalizar el xml de vistas
 Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página 
 1. ir a aplicaciones 
 2. pulsar `Actualizar lista de aplicaciones` 
-3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Prueba) 
-4. activamos y listo ya podriamos ver Pruebas en la lista de modulos de odoo que esta a la izquierda
+3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Tienda videojuegos) 
+4. activamos y listo ya podriamos ver Gestión de videojuegos en la lista de modulos de odoo que esta a la izquierda
