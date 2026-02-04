@@ -496,7 +496,7 @@ Cuando trabajas con Odoo y Docker, hay archivos que no deberías subir a GitHub,
 
 Una vez realizado lo anterior (Importanción) debemos remplazar los ficheros correspondientes (dataPostgreSQL y odoo-web-data) o todo el directorio volumesOdoo.
 
-Ademas debemos cambiar en el fichero docker-compose.yml cambiando `DB_PASSWORD`,  `DB_NAME` por los que haz colocado al momento de abril Odoo por primera vez.
+Ademas debemos cambiar en el fichero docker-compose.yml cambiando `DB_PASSWORD`,  `DB_NAME` por los que has colocado al momento de abrir Odoo por primera vez.
 
 ```yml
 version: '3.3'
