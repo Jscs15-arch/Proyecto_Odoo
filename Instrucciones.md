@@ -1162,7 +1162,7 @@ Personalizar el xml de vistas
 
     <!-- Top menu item -->
 
-    <menuitem name="Gestión tienda_electronica" id="tienda_electronica_menu_root"/>
+    <menuitem name="Gestión de Tienda de electronica" id="tienda_electronica_menu_root"/>
 
     <!-- menu categories -->
 
@@ -1182,4 +1182,3 @@ Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página
 2. pulsar `Actualizar lista de aplicaciones` 
 3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Tienda electronica) 
 4. activamos y listo ya podriamos ver Gestión de electronica en la lista de modulos de odoo que esta a la izquierda
->>>>>>> ea93e1f (agregada la práctica de modulo de tablas)
