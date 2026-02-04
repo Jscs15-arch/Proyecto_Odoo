@@ -938,7 +938,7 @@ odoo scaffold tienda_videojuegos /mnt/extra-addons
 ```
 
 ##### Configuración y personalización del modulo
-
+g
 Primero descomentamos la linea `security/ir.model.access.csv` del fichero `__manifest__.py` quedaria de la siguiente manera:
 ```py
     'data': [
@@ -1037,5 +1037,149 @@ Personalizar el xml de vistas
 Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página 
 1. ir a aplicaciones 
 2. pulsar `Actualizar lista de aplicaciones` 
+<<<<<<< HEAD
 3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Tienda videojuegos) 
 4. activamos y listo ya podriamos ver Gestión de videojuegos en la lista de modulos de odoo que esta a la izquierda
+=======
+3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Tienda electrónica) 
+4. activamos y listo ya podriamos ver Gestión de electrónica en la lista de modulos de odoo que esta a la izquierda
+
+### Practica con tablas
+#### Directorios y archivos para Modulos personalizados
+Para empezar todos los modulos se hacen en `/home/user/docker/Odoo/volumesOdoo/addons`
+
+Ahora crearemos el directorio del Modelo "tienda_electronica"
+```bash
+mkdir /home/user/docker/Odoo/volumesOdoo/addons/tienda_electronica
+```
+
+Luego creamos los ficheros `__init__.py` y `__manifest__.py` de los cuales agregaresmos lo siguiente a `__manifest__.py`
+```
+{
+    'name': "Tienda electrónica",
+    'author':"TecnoFix"
+}
+```
+
+#### Acceso al contenedor y creación de la plantilla del modulo
+
+Accedemos al contenedor con lo siguiente:
+```bash
+docker exec -it odoo-web bash
+```
+Generamos la plantilla del modulo personalizado
+```bash
+odoo scaffold tienda_electronica /mnt/extra-addons
+```
+
+#### Configuración y personalización del modulo
+
+Primero descomentamos la linea `security/ir.model.access.csv` del fichero `__manifest__.py` quedaria de la siguiente manera:
+```py
+    'data': [
+        'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/templates.xml',
+    ],
+```
+Modificar el csv de seguridad
+
+**RUTA:** /addons/tienda_electronica/security/ir.model.access.csv
+```csv
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+tienda_electronica_acl,tienda_electronica,model_tienda_electronica_tienda_electronica,base.group_user,1,1,1,1
+```
+
+Personalizar el python de models
+
+**Ruta:** volumesOdoo/addons/tienda_electronica/models/models.py
+```py
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+
+class tienda_electronica(models.Model):
+    _name = 'tienda_electronica.marca'
+    _description = 'Marcas'
+    _rec_name = 'nombre'
+
+    nombre = fields.Char(string='Nombre de la marca', required=True)
+
+    modelo_ids = fields.One2many(
+        'tienda_electronica.modelo',
+        'marca_id',
+        string= "Lista de modelos"
+    )
+```
+
+class tienda_electronica(models.Model):
+    _name = 'tienda_electronica.modelo'
+    _description = 'Modelos'
+    _rec_name = 'nombre'
+
+    nombre = fields.Char(string='Nombre del modelo', required=True)
+
+    marca_id = fields.Many2one(
+        'tienda_electronica.marca',
+        string= "Marca"
+    )
+
+Personalizar el xml de vistas
+**RUTA:** volumesOdoo/addons/tienda_electronica/views/views.xml
+```xml
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="tienda_electronica_list">
+      <field name="name">tienda_electronica list</field>
+      <field name="model">tienda_electronica.marca</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="nombre"/>
+          <field name="modelo_ids" widget="many2many_tags"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="marca_list">
+      <field name="name">Lista del marca</field>
+      <field name="model">academia.modelo</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="nombre"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="tienda_electronica_action_marca">
+      <field name="name">Ventana de marcas</field>
+      <field name="res_model">tienda_electronica.marca</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Top menu item -->
+
+    <menuitem name="Gestión tienda_electronica" id="tienda_electronica_menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Marcas" id="tienda_electronica_menu_marca" parent="tienda_electronica_menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Lista" id="tienda_electronica_menu_marca_list" parent="tienda_electronica_menu_marca"
+              action="tienda_electronica_action_marca"/>
+  </data>
+</odoo>
+```
+
+#### Instalación del modulo personalizado en Odoo
+Para instalarlo debemos acceder a [odoo](localhost:8069) desde la página 
+1. ir a aplicaciones 
+2. pulsar `Actualizar lista de aplicaciones` 
+3. luego buscar el modulo que hemos personalizado borrando los filtros existentes y buscando por el nombre que le establecimos (Tienda electronica) 
+4. activamos y listo ya podriamos ver Gestión de electronica en la lista de modulos de odoo que esta a la izquierda
+>>>>>>> ea93e1f (agregada la práctica de modulo de tablas)
