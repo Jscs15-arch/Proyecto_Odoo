@@ -1110,7 +1110,6 @@ class tienda_electronica(models.Model):
         'marca_id',
         string= "Lista de modelos"
     )
-```
 
 class tienda_electronica(models.Model):
     _name = 'tienda_electronica.modelo'
