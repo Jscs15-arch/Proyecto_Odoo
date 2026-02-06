@@ -1087,7 +1087,8 @@ Modificar el csv de seguridad
 **RUTA:** /addons/tienda_electronica/security/ir.model.access.csv
 ```csv
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-tienda_electronica_acl,tienda_electronica,model_tienda_electronica_tienda_electronica,base.group_user,1,1,1,1
+tienda_electronica_acl,tienda_electronica.marca,model_tienda_electronica_marca,base.group_user,1,1,1,1
+tienda_electronica_acl,tienda_electronica.modelo,model_tienda_electronica_modelo,base.group_user,1,1,1,1
 ```
 
 Personalizar el python de models
